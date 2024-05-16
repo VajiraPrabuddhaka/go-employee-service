@@ -1,0 +1,93 @@
+openapi: 3.0.0
+info:
+  title: Employee API
+  description: API for managing employees
+  version: 1.0.0
+
+paths:
+  /employee:
+    post:
+      summary: Add a new employee
+      parameters:
+        - in: query
+          name: emp_name
+          schema:
+            type: string
+          required: true
+          description: The name of the employee
+      responses:
+        '200':
+          description: Employee created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /employee/{id}:
+    get:
+      summary: Get employee by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The ID of the employee
+      responses:
+        '200':
+          description: Employee retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Employee not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Employee:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        name:
+          type: string
+          example: "vajira"
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Error message"
+
