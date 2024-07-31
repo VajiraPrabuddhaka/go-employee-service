@@ -16,7 +16,7 @@ var db *sql.DB
 
 func initDB() {
 	var err error
-	connString := fmt.Sprintf("sqlserver://sa:VFhWccmYunx9yyD0@%s?database=employee", os.Getenv("TS_SERVICE_URL"))
+	connString := fmt.Sprintf("sqlserver://%s:%s@%s?database=employee", os.Getenv("DB_USERNAME"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_HOST"))
 	db, err = sql.Open("sqlserver", connString)
 	if err != nil {
 		log.Fatalf("Error creating connection pool: %s", err.Error())
